@@ -1,3 +1,5 @@
+# Neuralnets-python-notes
+
 ### **Neural nets in simple terms**
 
 * Start at some random set of weights
