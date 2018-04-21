@@ -17,11 +17,15 @@
 	3. Slope of activation function at the node it feeds into ( in case of ReLu activation this is 1 for any node receiving a positive value and 0 otherwise)
 
 #### **Stochastic gradient descent: for computational efficieny**
-* Calculate slopes on only a subset of the data ("batch")
-* Use a different batch of data to calculate the next update
+* Calculate slopes on a single sample
+* Use next sample to calculate the next update
 * Start over from the beginning once all data is used
 * Each time through training data is called an epoch
-* In normal gradient descent, slopes are calculated using full data 
+* In normal("batch") gradient descent, slopes updates are done using the whole dataset. 
+
+Most applicatons of SGD actually use a subset of the data ("minibatch") at each step rather than a sinlge sample. The reason for this is single samples are usually noisy and the minibatches tend to average the noise out. A good balance is struck when the minibatch size is small enough to avoid some of the poor local minima, but large enough that it doesn't avoid the global minima or better-performing local minima. One important advantage of SGD is that the cost function need not be a convex function, which is a requirement for "batch" gradient descent to work properly as it might end up with a "local" minimum instead of the "global" minimum. 
+
+From the outset, although it might look like SGD is more time consuming that batch gradient descent, but SGD is computationally a whole lot faster.  Large datasets often can't be held in RAM, which makes vectorization much less efficient. Rather, each sample or batch of samples must be loaded, worked with, the results stored, and so on. Minibatch SGD, on the other hand, is usually intentionally made small enough to be computationally tractable.
 
 #### Keras and Tensorflow
 **Keras** is a high-level neural networks API, written in python capable of running on top of **Tensorflow**, **CNTK**, **Theano**.
