@@ -39,7 +39,7 @@ Model building steps :
 
 **Specifying a model**
 
-```{python}
+```python
 import keras
 from keras.layers import Dense
 from keras.models import Sequential
@@ -62,22 +62,22 @@ model.add(Dense(1))
 ```
 #### Compiling the model
 We need to mention the optimizer and loss function. 
-```{python}
+```python
 model.compile(optimizer="adam",loss="mean_squared_error")
 ```
 #### Fitting the model 
 Scale your data(normalize) before fitting as it will be helpful in optimization. Apply backpropogation and gradient descent with your data to update weights
-```{python}
+```python
 model.fit(predictors,target)
 ```
 Most commonly used loss function for classification problems is `categorical_crossentropy`/`log-loss` 
-```{python}
+```python
 model.compile(optimizer="sgd",loss="categorical_crossentropy",metrics=["accuracy"])
 ```
-`sgd- stochastic gradient descent
+`sgd- stochastic gradient descent`
 
 #### Saving, reloading and using your model
-```{python}
+```python
 from keras.models import load_model
 model.save('model_fil.h5')
 my_model=load_model('my_model.h5')
@@ -111,7 +111,7 @@ This becomes much worse when we stack multiple layers of such non-linearities on
 We can avoid this problem by using activation functions which don't have this property of 'squashing' the input space into a small region. A popular choice is Rectified Linear Unit which maps x to max(0,x)
 
 
-```{python}
+```python
 from keras.optimizers import SGD
 
 model.compile(optimizer=SGD(lr=0.001),loss="categorical_crossentropy")
@@ -125,7 +125,7 @@ model.fit(predictors,target,validation_split=0.3)
 ```
 We need to keep training as the validation scores are improving and stop if they are not. This is called **Early stopping**
 
-```{python}
+```python
 from keras.callbacks import EarlySopping
 early_stopping_monitor=EarlyStopping(patience=2)
 model.fit(predictors,target,validation_split=0.3,epochs=20,callbacks=[early_stopping_monitor])
