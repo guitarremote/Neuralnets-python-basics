@@ -45,16 +45,16 @@ from keras.layers import Dense
 from keras.models import Sequential
 
 #number of columns in a predictors 
-n_cols=predictors.shape[1] 
+n_cols = predictors.shape[1] 
 
 #Set up the model: model
-model=Sequential()
+model = Sequential()
 
 # Add the first layer, say 50 neurons
-model.add(Dense(50,activation="relu",input_shape=(n_cols,)))
+model.add(Dense(50,activation = "relu", input_shape = (n_cols,)))
 
 #Add the second layer, say 32 neurons
-model.add(Dense(32,activation="relu"))
+model.add(Dense(32, activation = "relu"))
 
 #Add the output layer
 model.add(Dense(1))
@@ -63,16 +63,16 @@ model.add(Dense(1))
 #### Compiling the model
 We need to mention the optimizer and loss function. 
 ```python
-model.compile(optimizer="adam",loss="mean_squared_error")
+model.compile(optimizer = "adam", loss = "mean_squared_error")
 ```
 #### Fitting the model 
 Scale your data(normalize) before fitting as it will be helpful in optimization. Apply backpropogation and gradient descent with your data to update weights
 ```python
-model.fit(predictors,target)
+model.fit(predictors, target)
 ```
 Most commonly used loss function for classification problems is `categorical_crossentropy`/`log-loss` 
 ```python
-model.compile(optimizer="sgd",loss="categorical_crossentropy",metrics=["accuracy"])
+model.compile(optimizer = "sgd", loss = "categorical_crossentropy", metrics = ["accuracy"])
 ```
 `sgd- stochastic gradient descent`
 
@@ -80,9 +80,9 @@ model.compile(optimizer="sgd",loss="categorical_crossentropy",metrics=["accuracy
 ```python
 from keras.models import load_model
 model.save('model_fil.h5')
-my_model=load_model('my_model.h5')
-predictions=my_model.predict(data_to_predict_with)
-probability_true=predictions[:,1]
+my_model = load_model('my_model.h5')
+predictions = my_model.predict(data_to_predict_with)
+probability_true = predictions[:,1]
 ```
 
 #### Fine tuning models with Keras
@@ -114,21 +114,21 @@ We can avoid this problem by using activation functions which don't have this pr
 ```python
 from keras.optimizers import SGD
 
-model.compile(optimizer=SGD(lr=0.001),loss="categorical_crossentropy")
+model.compile(optimizer = SGD(lr = 0.001), loss = "categorical_crossentropy")
 
 ```
 
 **Validation** - k-fold cross validation would not be used in deep learning as it would computationally very expensive
-```{python}
-model.compile(optimizer="adam",loss="categorial_crossentropy",metrics=["accuracy"])
-model.fit(predictors,target,validation_split=0.3)
+```python
+model.compile(optimizer = "adam", loss = "categorial_crossentropy", metrics = ["accuracy"])
+model.fit(predictors, target, validation_split = 0.3)
 ```
 We need to keep training as the validation scores are improving and stop if they are not. This is called **Early stopping**
 
 ```python
 from keras.callbacks import EarlySopping
-early_stopping_monitor=EarlyStopping(patience=2)
-model.fit(predictors,target,validation_split=0.3,epochs=20,callbacks=[early_stopping_monitor])
+early_stopping_monitor = EarlyStopping(patience = 2)
+model.fit(predictors, target, validation_split = 0.3, epochs = 20, callbacks = [early_stopping_monitor])
 
 ```
 Possible experimentations -
